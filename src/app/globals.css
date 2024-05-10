@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+  background-color: #f6f4f6;
+}
+
+.header{
+  background-color: #FBEEFF;
+  height: 95px;
+}
+
+.title{
+  font-size: 39.06px;
+  font-weight: 900;
+  line-height: 51.68px;
+  letter-spacing: -0.01em;
+  text-align: left;
+  margin-top: 4rem;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: rgb(201, 131, 208);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+.search{
+  width: 1366px;
+  height: 45px;
+  top: 275px;
+  left: 73px;
+  gap: 0px;
+  border-radius: 8px 0px 0px 0px;
+  opacity: 0px;
+  margin-top: 2rem;
+}
+
+.contacts {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4rem; 
+}
+
+.centered {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.subtitle {
+  font-family: 'Red Hat Display', sans-serif;
+  font-size: 20px;
+  text-align: center;
+  font-weight: 700;
+  line-height: 26.46px;
+  margin-top: 20px; /* Ajusta según sea necesario */
+}
+
+.button {
+  background-color: #9378FF;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 60px;
+  font-family: 'Red Hat Display', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 20px; 
+  padding: 1rem 3rem;
+}

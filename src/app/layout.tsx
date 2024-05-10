@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import Header from './components/Header';
-import { Poppins } from 'next/font/google';
+import { Red_Hat_Display } from 'next/font/google';
+import  { Providers } from '@/redux/providers'
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+
 
 export const metadata: Metadata = {
   title: "Contacts Management App",
   description: "Next js app for manage contacts",
 };
 
-const poppins = Poppins({
+const redHatDisplay = Red_Hat_Display({
   weight: ['400', '700'],
   subsets: ['latin'],
 });
@@ -23,9 +23,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={poppins.className}>
+      <body className={redHatDisplay.className}>
         <Header />
-        <main className='container'>{children}</main>
+        <main className='container mx-auto'>
+          <Providers>
+            {children}  
+          </Providers>
+          </main>
       </body>
     </html>
   );
