@@ -11,11 +11,11 @@ const firebaseConfig = {
   appId: "1:94095804041:web:74c185bdaa9b265a676858"
 };
 
-// Initialize Firebase
+
 const app = initializeApp(firebaseConfig);
 export const storage = getStorage(app);
 
-export async function uploadFile(file){
+export async function uploadFile(file: Blob | ArrayBuffer){
     const storageRef = ref(storage, v4())
    await uploadBytes(storageRef, file);
    const url = await getDownloadURL(storageRef)

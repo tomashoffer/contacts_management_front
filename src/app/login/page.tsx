@@ -35,6 +35,7 @@ const LoginPage = () => {
           token: response.data.token,
           isLoggedIn:true
         }
+        localStorage.removeItem('token');
         localStorage.setItem('token', response.data.token);
         login(loginSessionData)
       }else{
@@ -59,7 +60,6 @@ async function handleSubmitRegister(data: RegisterData) {
     };
 
     const response = await registerUserMutation(newUser);
-    console.log('response', response);
 
     if (response && response.data) {
       dispatch(setIsLoginPage(true))

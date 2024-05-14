@@ -4,7 +4,6 @@ import RegisterData from '@/interfaces/RegisterData';
 
 const baseUrl = 'http://localhost:5000/api/auth/';
 
-// Obtenemos el token del almacenamiento local del navegador
 let token = '';
 if (typeof window !== 'undefined') {
   token = localStorage.getItem('token') || '';
