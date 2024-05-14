@@ -1,26 +1,25 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type AuthState = {
-  value: number;
+  isLoginPage: boolean;
 };
 
 const initialState: AuthState = {
-  value: 0,
+  isLoginPage: true,
 };
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1;
+    setIsLoginPage: (state, action) => {
+      state.isLoginPage = action.payload;
     },
-  
   },
 });
 
 export const {
-  increment,
+  setIsLoginPage,
 } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -3,8 +3,9 @@ import Header from './components/Header';
 import { Red_Hat_Display } from 'next/font/google';
 import  { Providers } from '@/redux/providers'
 import "./globals.css";
-
-
+import { getSession } from "@/action";
+// import { Session } from "inspector";
+// import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Contacts Management App",
@@ -16,21 +17,24 @@ const redHatDisplay = Red_Hat_Display({
   subsets: ['latin'],
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const session = await getSession();
+  
   return (
-    <html lang='en'>
-      <body className={redHatDisplay.className}>
-        <Header />
-        <main className='container mx-auto'>
           <Providers>
-            {children}  
+            <html lang='en'>
+              <body className={redHatDisplay.className}>
+                <Header session={session} />
+                <main className='container mx-auto'>
+                    {children}  
+                  </main>
+              </body>
+            </html>
           </Providers>
-          </main>
-      </body>
-    </html>
   );
 }

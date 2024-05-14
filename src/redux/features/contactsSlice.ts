@@ -1,26 +1,50 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type ContactsState = {
-  value: number;
+    allContacts: [];
+    selectedContact: {},
+    countContacts: 0,
+    editContact: false,
+    searchContact: []
 };
 
 const initialState: ContactsState = {
-  value: 0,
+  allContacts: [],
+  selectedContact: {},
+  countContacts: 0,
+  editContact: false,
+  searchContact: []
 };
 
 export const contactsSlice = createSlice({
   name: "contacts",
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1;
+    setAllContacts: (state, action) => {
+      state.allContacts = action.payload;
+    },
+    setSelectedContact: (state, action) => {
+      state.selectedContact = action.payload;
+    },
+    setCountContacts: (state, action) => {
+      state.countContacts = action.payload;
+    },
+    setEditContact: (state, action) => {
+      state.editContact = action.payload;
+    },
+    setSearchContacts: (state, action) => {
+      state.searchContact = action.payload;
     },
   
   },
 });
 
 export const {
-  increment,
+    setAllContacts,
+    setSelectedContact,
+    setCountContacts,
+    setEditContact,
+    setSearchContacts
 } = contactsSlice.actions;
 
 export default contactsSlice.reducer;

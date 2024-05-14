@@ -1,20 +1,28 @@
-'use client';
+'use server';
 import React from 'react'
 import SearchContacts from './components/SearchContacts'
 import Contacts from './components/Contacts';
-import Contact from '../interfaces/Contact'
-import { useState, useEffect } from 'react';
+import { redirect } from 'next/navigation';
+import { SessionData } from '@/lib';
+import { getSession } from '@/action';
 
-function HomePage() {
+async function HomePage() {
 
-  const contactsData: Contact[] = []
+  const session = await getSession();
+  
+  if(!session.isLoggedIn){
+    redirect("/login")
+  }
+
   return (
-    <>
-    <h1 className='title'>Contacts</h1>
-    <SearchContacts/>
-    <Contacts contacts={contactsData}/>
-    </>
-  )
+    <div>
+      <h1 className='title'>Contacts</h1>
+      <SearchContacts/>
+      <Contacts/>
+    </div>
+  );
 }
+
+
 
 export default HomePage

@@ -7,6 +7,7 @@ body{
 }
 
 .header{
+  margin-top: 0;
   background-color: #FBEEFF;
   height: 95px;
 }
@@ -17,7 +18,7 @@ body{
   line-height: 51.68px;
   letter-spacing: -0.01em;
   text-align: left;
-  margin-top: 4rem;
+  margin-top: 3rem;
 }
 
 .spinner {
@@ -30,7 +31,7 @@ body{
 }
 
 .search{
-  width: 1366px;
+  width: 80vw;
   height: 45px;
   top: 275px;
   left: 73px;
@@ -40,12 +41,13 @@ body{
   margin-top: 2rem;
 }
 
-.contacts {
+.searchbar{
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  margin-top: 4rem; 
+  justify-content: center;
+}
+.search-icon{
+  left: 4.2rem;
 }
 
 .centered {
@@ -55,6 +57,24 @@ body{
   justify-content: center;
   align-items: center;
   gap: 1rem;
+}
+.centered-register {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.contact-data{
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8rem;
 }
 
 .subtitle {
@@ -76,5 +96,228 @@ body{
   font-size: 16px;
   font-weight: 700;
   margin-top: 20px; 
+  cursor: pointer;
   padding: 1rem 3rem;
+}
+
+.contacts-container {
+  width: 100%; 
+  display: flex;
+  justify-content: center; 
+}
+
+.contacts {
+  display: grid;
+  width: 80%;
+  grid-template-columns: repeat(3, minmax(200px, 1fr)); 
+  gap: 20px; 
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.contact-card {
+  display: grid;
+  grid-template-columns: repeat(3, 30% 50% 20%); 
+  height: 119px;
+  border: 1px solid #FBEEFF;
+  border-radius: 16px;
+  align-items: center;
+  padding: 0 10px;
+  background-color: #FFFFFF;
+}
+
+
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
+.arrow-icon {
+  font-size: 40px; 
+  color: #99879D;
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+
+.contact-details {
+  display: grid;
+  width: 80%;
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 20px; 
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.contact-name {
+  font-family: 'Red Hat Display', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #120E21;
+  margin-bottom: 5px; 
+}
+
+.contact-profession {
+  font-family: 'Public Sans', sans-serif;
+  font-size: 12.8px;
+  color: #99879D;
+}
+
+.header-profile{
+  width: 80vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 278px;
+  top: 2rem;
+  gap: 0px;
+  border-radius: 16px 0px 0px 0px;
+  border: 1px 0px 0px 0px;
+  opacity: 0px;
+  background: #EBEBEB;
+  position: relative;
+}
+
+.profile-image {
+  width: 186px;
+  height: 186px;
+  top: calc(100% - 186px / 2); 
+  left: 50%;
+  transform: translateX(-50%); 
+  gap: 0px;
+  border: 2px solid black; 
+  opacity: 1; 
+  position: absolute;
+  z-index: 1; 
+  border-radius: 50%;
+}
+
+.contact-details {
+  display: flex;
+  width: 400px;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.column p {
+  margin-bottom: 10px;
+}
+
+.edit-button {
+  position: absolute;
+  right: 3rem;
+  top: 11rem;
+  cursor: pointer;
+}
+.edit-button-download {
+  position: absolute;
+  right: 5rem;
+  top: 14rem;
+  cursor: pointer;
+}
+
+/* Estilos para los inputs */
+.form-input {
+  background: #FBEEFF;
+  width: 343px;
+  height: 56px;
+  color: #99879D;
+  gap: 0px;
+  padding-left: 1rem;
+  border-radius: 8px 0px 0px 0px;
+  opacity: 0px;
+}
+
+/* Estilos para los contenedores de los inputs */
+.edit-contact-form {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.input-group {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:start;
+  gap: 1rem;
+  margin-bottom: 16px;
+}
+
+.form-column {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.save-button, .cancel-button {
+  width: 100px;
+  height: 40px;
+  margin-right: 10px;
+  background-color: #9378FF;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 2rem;
+}
+
+.cancel-button {
+  background-color: #ccc;
+}
+
+#file-input{
+  display: none;
+}
+
+.file-div {
+  display: flex;
+  align-items: center; /* Centra verticalmente */
+  gap: 1rem; 
+  padding: 0 1rem;/* Espacio entre los elementos */
+}
+
+.upload-label {
+  flex: 1; /* El texto ocupa el espacio restante */
+}
+
+.edit-button-download-file {
+  cursor: pointer;
+  margin-right: 1rem; /* Cambia el cursor al pasar sobre el ícono */
+}
+
+
+
+@media (max-width: 768px) {
+  .contact-card {
+    flex: 1 1 calc(100% - 1rem); /* Hace que cada tarjeta ocupe el 100% del ancho */
+  }
 }

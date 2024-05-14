@@ -3,8 +3,9 @@ export default interface Contact {
     name: string;
     email: string;
     address: string;
-    cellphoneNumber: string;
-    profilePicture: string;
+    phone: string;
+    photo: string;
+    profession: string;
     userId: string;
   }
   

@@ -7,8 +7,8 @@ import contactsReducer from "./features/contactsSlice"
 
 export const store = configureStore({
     reducer: {
-        authReducer,
-        contactsReducer,
+        auth: authReducer,
+        contacts: contactsReducer,
         [contactsApi.reducerPath]: contactsApi.reducer,
         [authApi.reducerPath]: authApi.reducer
     },
