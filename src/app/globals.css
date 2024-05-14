@@ -4,6 +4,7 @@
 
 body{
   background-color: #f6f4f6;
+  font-family: 'Red Hat Display', sans-serif;
 }
 
 .header{
@@ -105,6 +106,13 @@ body{
   display: flex;
   justify-content: center; 
 }
+.contacts-data {
+  display: flex;
+  width: 100%; 
+  justify-content: center; 
+  flex-direction: column;
+  align-items: center;
+}
 
 .contacts {
   display: grid;
@@ -113,6 +121,11 @@ body{
   gap: 20px; 
   justify-content: center;
   align-items: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.add-contact-div{
   margin-top: 2rem;
   margin-bottom: 2rem;
 }
@@ -130,6 +143,12 @@ body{
 
 
 .column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.column-contacts {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -154,18 +173,6 @@ body{
   justify-content: center;
   align-items: center;
   height: 100vh;
-}
-
-
-.contact-details {
-  display: grid;
-  width: 80%;
-  grid-template-columns: repeat(2, 1fr); 
-  gap: 20px; 
-  justify-content: center;
-  align-items: center;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
 }
 
 .contact-name {
@@ -285,8 +292,21 @@ body{
   background-color: #9378FF;
   color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 60px;
   cursor: pointer;
+  margin-bottom: 2rem;
+}
+.add-button{
+  background-color: #9378FF;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 60px;
+  font-family: 'Red Hat Display', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 1rem 3rem; 
   margin-bottom: 2rem;
 }
 
@@ -315,9 +335,177 @@ body{
 }
 
 
+.contact-data-mobile{
+  display:none;
+}
 
 @media (max-width: 768px) {
   .contact-card {
     flex: 1 1 calc(100% - 1rem); /* Hace que cada tarjeta ocupe el 100% del ancho */
   }
+
+  .contact-data{
+    display: none;
+  }
+  .edit-button-download{
+    display: none;
+  }
+  .edit-button{
+    display: none;
+  }
+
+  .header{
+    margin-top: 0;
+    background-color: #f6f4f6;
+    height: 95px;
+  }
+  .title{
+    font-size: 39.06px;
+    font-weight: 900;
+    line-height: 51.68px;
+    letter-spacing: -0.01em;
+    text-align: left;
+    margin-top: 0rem;
+    margin-left: 1rem
+  }
+  .search{
+    width: 90vw;
+    height: 45px;
+    top: 275px;
+    left: 73px;
+    gap: 0px;
+    border-radius: 8px 0px 0px 0px;
+    opacity: 0px;
+    margin-top: 1rem;
+  }
+
+  .searchbar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  .search-icon{
+    bottom: 1rem;
+    left: .4rem;
+  }
+  .contacts {
+    grid-template-columns: 1fr; 
+    gap: 0;
+    margin-top: 0.5rem;
+    
+  }
+
+  .contacts-container {
+    background-color: #FAF9FE;
+  }
+
+  .contact-card {
+    width: 100vw;
+    width: 375px;
+    border-radius: 0px;
+    height: 103px;
+    top: 256px;
+    gap: 0px;
+    opacity: 0px;
+    margin: 0;
+  }
+  .contact-card.odd {
+    background-color: #FAF9FE;
+  }
+  
+  /* Estilos para las tarjetas impares */
+  .contact-card.even {
+    background-color: #FFFFFF;
+  }
+  
+  .contact-name{
+    text-align: center;
+  }
+  .arrow-icon {
+    margin-left: 2.5rem;
+  }
+  
+  .edit-contact-form {
+    display: flex;
+    flex-direction: column; 
+    gap: 0rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .form-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0rem; /* Añadir espacio entre los campos */
+  }
+  .input-group {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:start;
+    gap: 0rem;
+    margin-bottom: 16px;
+  }
+  .header-profile{
+    width: 95vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 173px;
+    top: 0rem;
+    gap: 0px;
+    border-radius: 16px 0px 0px 0px;
+    border: 1px 0px 0px 0px;
+    opacity: 0px;
+    background: #FBEEFF;
+    position: relative;
+  }
+  .profile-image {
+    width: 82px;
+    height: 82px;
+    top: 1rem; 
+    left: 50%;
+    transform: translateX(-50%); 
+    gap: 0px;
+    border: 2px solid transparent; 
+    opacity: 1; 
+    position: absolute;
+    z-index: 1; 
+    border-radius: 50%;
+  }
+  .contact-data-mobile{
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 6rem;
+  }
+  .contact-details {
+    display: flex;
+    width: 80vw;
+    flex-direction: column; 
+    margin-top: 20px;
+  }
+  
+  .column {
+    display: block;
+    flex-direction: column; 
+    justify-content: center;
+    padding-left: 1rem;
+    align-items: flex-start; 
+    text-align: start; 
+  }
+
+  .edit-button-mobile {
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
 }

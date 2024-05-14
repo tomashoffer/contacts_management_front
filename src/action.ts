@@ -23,10 +23,12 @@ export const login = async (
   session.email = data.email;
   session.token = data.token;
   session.isLoggedIn = true;
-  console.log("SAVE",session)
+
   await session.save();
   redirect("/");
 };
+
+
 
 export const logout = async () => {
   const session = await getSession();

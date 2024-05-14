@@ -4,17 +4,31 @@ import RegisterData from '@/interfaces/RegisterData';
 
 const baseUrl = 'http://localhost:5000/api/auth/';
 
-    interface UserData {
-        id: string;
-        username: string;
-        email: string;
+// Obtenemos el token del almacenamiento local del navegador
+let token = '';
+if (typeof window !== 'undefined') {
+  token = localStorage.getItem('token') || '';
+}
+
+interface UserData {
+  id: string;
+  username: string;
+  email: string;
+}
+const baseQuery = fetchBaseQuery({
+  baseUrl,
+  prepareHeaders: (headers) => {
+    if(token){
+      headers.set('Authorization', `Bearer ${token}`);
     }
-  
-    
+    return headers;
+  },
+});
+
 
 export const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl }),
+  baseQuery,
   endpoints: (builder) => ({
     registerUser: builder.mutation<void, RegisterData>({
       query: (newUser) => ({
@@ -24,18 +38,20 @@ export const authApi = createApi({
       }),
     }),
     loginUser: builder.mutation<{
-      userData: any; token: string, user: UserData 
-}, {email: string; password: string}>({
+      userData: UserData; 
+      token: string; 
+      user: UserData;
+    }, { email: string; password: string }>({
       query: (credentials) => ({
         url: 'login',
         method: 'POST',
         body: credentials,
       }),
     }),
-    getUserInfo: builder.query<User, void>({
+    verifyTokenData: builder.query<User, void>({
       query: () => 'user',
     }),
   }),
 });
 
-export const { useRegisterUserMutation, useLoginUserMutation, useGetUserInfoQuery } = authApi;
+export const { useRegisterUserMutation, useLoginUserMutation, useVerifyTokenDataQuery } = authApi;

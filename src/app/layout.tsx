@@ -4,8 +4,6 @@ import { Red_Hat_Display } from 'next/font/google';
 import  { Providers } from '@/redux/providers'
 import "./globals.css";
 import { getSession } from "@/action";
-// import { Session } from "inspector";
-// import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Contacts Management App",
@@ -24,12 +22,13 @@ export default async function RootLayout({
 }>) {
 
   const session = await getSession();
+  const isLoggedIn = session.isLoggedIn;
   
   return (
           <Providers>
             <html lang='en'>
               <body className={redHatDisplay.className}>
-                <Header session={session} />
+                <Header isLoggedIn={isLoggedIn} />
                 <main className='container mx-auto'>
                     {children}  
                   </main>

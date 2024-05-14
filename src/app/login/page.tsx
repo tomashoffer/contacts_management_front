@@ -35,6 +35,7 @@ const LoginPage = () => {
           token: response.data.token,
           isLoggedIn:true
         }
+        localStorage.setItem('token', response.data.token);
         login(loginSessionData)
       }else{
         Swal.fire({
@@ -62,7 +63,21 @@ async function handleSubmitRegister(data: RegisterData) {
 
     if (response && response.data) {
       dispatch(setIsLoginPage(true))
-      // Acceder al token si está presente
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({
+        icon: "success",
+        title: "Usuario creado exitosamente"
+      });
     } else {
       console.error('Unexpected response:', response);
     }

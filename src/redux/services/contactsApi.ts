@@ -3,20 +3,33 @@ import Contact from '../../interfaces/Contact';
 
 const baseUrl = 'http://localhost:5000/api/';
 
+let token = '';
+
+if (typeof window !== 'undefined') {
+  token = localStorage.getItem('token') || '';
+}
+
 interface contactPagination {
-    contacts: Contact[];
-    total: number;
+  contacts: Contact[];
+  total: number;
 }
 interface contactById {
-    contact: Contact;
+  contact: Contact;
 }
 
 export const contactsApi = createApi({
   reducerPath: 'contactsApi',
-  baseQuery: fetchBaseQuery({ baseUrl }),
+  baseQuery: fetchBaseQuery({
+    baseUrl,
+    prepareHeaders: (headers) => {
+      headers.set('Authorization', `Bearer ${token}`);
+
+      return headers;
+    },
+  }),
   endpoints: (builder) => ({
-    getContacts: builder.query<contactPagination, void>({
-      query: () => 'contacts',
+    getContacts: builder.query<contactPagination, { page: number; limit: number }>({
+      query: ({ page, limit }) => `contacts?page=${page}&limit=${limit}`,
     }),
     getContactById: builder.query<contactById, string>({
       query: (contactId) => `contacts/getbyid?id=${contactId}`,
@@ -43,9 +56,16 @@ export const contactsApi = createApi({
       }),
     }),
     searchContacts: builder.query<contactPagination, string>({
-      query: (name) => `contacts/search?name=${name}`, // Aquí debes ajustar la URL según la estructura de tu ruta de búsqueda
+      query: (name) => `contacts/search?name=${name}`,
     }),
   }),
 });
 
-export const { useGetContactsQuery, useCreateContactMutation, useUpdateContactMutation, useUploadFileMutation, useSearchContactsQuery, useGetContactByIdQuery } = contactsApi;
+export const {
+  useGetContactsQuery,
+  useCreateContactMutation,
+  useUpdateContactMutation,
+  useUploadFileMutation,
+  useSearchContactsQuery,
+  useGetContactByIdQuery,
+} = contactsApi;

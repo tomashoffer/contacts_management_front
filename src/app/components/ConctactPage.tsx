@@ -7,6 +7,7 @@ import { useGetContactByIdQuery } from '@/redux/services/contactsApi';
 import { setSelectedContact } from '@/redux/features/contactsSlice';
 import LoadingPage from '../loading';
 import { useEffect, useState } from 'react';
+import useVerifyTokenAndRedirect from '../hook/verifyToken';
 
 const ContactPage = () => {
   const contactsSelected: any = useAppSelector((state) => state.contacts.selectedContact);  
@@ -15,15 +16,16 @@ const ContactPage = () => {
   const dispatch = useAppDispatch();
   const match = pathName.match(/\/contact\/([\w-]+)/); 
   let id = match ? match[1] : '';
- 
+
+  useVerifyTokenAndRedirect();
+  
     const { data, isLoading, error } = useGetContactByIdQuery(id);
     if(data){
         dispatch(setSelectedContact(data))
       if(!contact){
         setContact(data)
       }
-      }
-
+    }
       if (isLoading) {
         return <LoadingPage />;
       }

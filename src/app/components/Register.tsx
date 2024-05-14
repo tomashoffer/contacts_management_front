@@ -1,139 +1,88 @@
-import React, { ChangeEvent, useState } from 'react';
-import { uploadFile } from '@/firebase/config';
+import React from 'react';
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
+import * as Yup from 'yup';
 import RegisterData from '@/interfaces/RegisterData';
-import { FaCheckCircle } from "react-icons/fa";
 
 const Register = ({ handleSubmitRegister }: { handleSubmitRegister: (data: RegisterData) => void }) => {
 
-  const [name, setName] = useState('');
-  const [title, setTitle] = useState('');
-  const [address, setAddress] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [photo, setPhoto] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordRepeat, setPasswordRepeat] = useState('');
+  interface RegisterData {
+    username: string;
+    email: string;
+    password: string;
+    passwordRepeat?: string; 
+  }
 
-
-
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    switch (name) {
-      case 'username':
-        setName(value);
-        break;
-        case 'email':
-          setEmail(value);
-          break;
-      case 'password':
-        setPassword(value);
-        break;
-      case 'passwordRepeat':
-        setPasswordRepeat(value);
-        break;
-      default:
-        break;
-    }
+  const initialValues: RegisterData = {
+    username: '',
+    email: '',
+    password: '',
+    passwordRepeat: ''
   };
+
+  const validationSchema = Yup.object().shape({
+    username: Yup.string().required('Username is required'),
+    email: Yup.string().email('Invalid email address').required('Email is required'),
+    password: Yup.string().required('Password is required').min(8, 'Password must be at least 8 characters'),
+    passwordRepeat: Yup.string().oneOf([Yup.ref('password')], 'Passwords must match').required('Password confirmation is required')
+  });
   
-
-  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files?.[0] || null;
-    if (selectedFile) {
-        try {
-          const url = await uploadFile(selectedFile);
-          console.log(url);
-          setPhoto(url)
-        } catch (error) {
-          console.error('Error:', error);
-          alert('Error al subir la imagen');
-        }
-      } else {
-        alert('Por favor selecciona un archivo');
-      }
-
-  };
-
-
-  const handleSubmit = () => {
-    if (!name || !email || !password) {
+  const handleSubmit = (values: RegisterData, { setSubmitting }: FormikHelpers<RegisterData>) => {
+    const { username, email, password, passwordRepeat } = values; 
+    
+    if (!username || !email || !password) {
       alert('Please complete all the fields');
       return;
     }
-    if(password !== passwordRepeat){
+    if (password !== passwordRepeat) {
       alert('Password do not match');
       return;
     }
-    let data = {
-      username: name,
-      email,
-      address,
-      phone,
-      photo,
-      profession: title,
-      password
-    }
-    handleSubmitRegister(data)
-  }
-
-
-
+    handleSubmitRegister({ username, email, password });
+    setSubmitting(false);
+  };
+  
+  
   return (
     <div className='centered-register'>
-        <div className="edit-contact-form">
-        <div className="form-column">
-            <div className="input-group">
-            <label className="contact-name" htmlFor="username">Username</label>
-            <input
-                type="text"
-                name="username"
-                id="username"
-                value={name}
-                onChange={handleInputChange}
-                className="form-input"
-            />
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ isSubmitting }) => (
+          <Form>
+            <div className="edit-contact-form">
+            <div className="form-column">
+              <div className="input-group">
+                <label className="contact-name" htmlFor="username">Username</label>
+                <Field type="text" name="username" className="form-input" />
+                <ErrorMessage name="username" component="div" className="error-message" />
+              </div>
+              <div className="input-group">
+                <label className="contact-name" htmlFor="password">Password</label>
+                <Field type="password" name="password" className="form-input" />
+                <ErrorMessage name="password" component="div" className="error-message" />
+              </div>
             </div>
-            <div className="input-group">
-              <label className="contact-name" htmlFor="password">Password</label>
-              <input
-                type="password" 
-                name="password"
-                id="password"
-                value={password}
-                onChange={handleInputChange}
-                className="form-input"
-              />
+            <div className="form-column">
+              <div className="input-group">
+                <label className="contact-name" htmlFor="email">Email</label>
+                <Field type="email" name="email" className="form-input" />
+                <ErrorMessage name="email" component="div" className="error-message" />
+              </div>
+              <div className="input-group">
+                <label className="contact-name" htmlFor="passwordRepeat">Repeat Password</label>
+                <Field type="password" name="passwordRepeat" className="form-input" />
+                <ErrorMessage name="passwordRepeat" component="div" className="error-message" />
+              </div>
             </div>
-        </div>
-        <div className="form-column">
-        <div className="input-group">
-            <label className="contact-name" htmlFor="email">Email</label>
-            <input
-                type="email"
-                name="email"
-                id="email"
-                value={email}
-                onChange={handleInputChange}
-                className="form-input"
-            />
             </div>
-            <div className="input-group">
-              <label className="contact-name" htmlFor="passwordRepeat">Repeat Password</label>
-              <input
-                type="password" 
-                name="passwordRepeat"
-                id="passwordRepeat"
-                value={passwordRepeat}
-                onChange={handleInputChange}
-                className="form-input"
-              />
-            </div>
-         
-        </div>
-        </div>
-        <div onClick={handleSubmit} className="button">
-          REGISTER
-        </div>
+            <button type="submit" disabled={isSubmitting} className="button">
+              {isSubmitting ? 'Registering...' : 'REGISTER'}
+            </button>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 };

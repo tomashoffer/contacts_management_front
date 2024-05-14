@@ -35,6 +35,10 @@ const ProfileHeader: React.FC<ContactDataProps> = ({ contactData }) => {
           alt="Profile"
           className="profile-image"
         />
+        <div className="contact-data-mobile">
+        <p className="contact-name">{contact.name}</p>
+        <p className="contact-profession">{contact.profession}</p>
+      </div>
            {editContact ? <img className='edit-button-download' src="/download.png" alt="No contacts" /> : <button onClick={handleEditContact} className="button edit-button">EDIT</button>}
       </div>
       <div className="contact-data">

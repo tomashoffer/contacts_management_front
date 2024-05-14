@@ -1,19 +1,19 @@
 'use client';
 import { logout } from '@/action';
-import { SessionData } from '@/lib';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FaArrowLeft } from "react-icons/fa6";
 
 interface HeaderProps {
-  session: SessionData;
+  isLoggedIn: boolean;
 }
 
-const Header: React.FC<HeaderProps>  = async ({ session }) => {
+const Header: React.FC<HeaderProps>  = async ({ isLoggedIn }) => {
   const pathName = usePathname();
-  const userLogged = session.isLoggedIn;
+
 
   const handleLogOut = () => {
+    localStorage.removeItem('token');
     logout();
   }
 
@@ -23,7 +23,7 @@ const Header: React.FC<HeaderProps>  = async ({ session }) => {
         <Link href='/'>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <FaArrowLeft style={{ color: '#99879D' }} />
-            <span style={{ color: '#99879D', marginLeft: '0.6rem', fontWeight: 'bold' }}>Back</span>
+            <span style={{ color: '#99879D', marginLeft: '0.6rem', fontWeight: 'normal' }}>Back</span>
           </div>
         </Link>
       ) : 
@@ -33,7 +33,7 @@ const Header: React.FC<HeaderProps>  = async ({ session }) => {
         </div>
       )
       }
-      {userLogged && 
+      {isLoggedIn && 
         <div style={{ paddingRight: '1rem' }}>
           <span style={{ color: '#99879D', fontWeight: 'bold', cursor: 'pointer' }} onClick={handleLogOut}>Logout</span>
         </div>

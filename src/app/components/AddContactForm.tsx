@@ -1,32 +1,25 @@
+'use client'
 import React, { useEffect, useState } from 'react';
 import Autosuggest, { SuggestionSelectedEventData } from 'react-autosuggest';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { uploadFile } from '@/firebase/config';
-import { setEditContact, setSelectedContact } from '@/redux/features/contactsSlice';
 import { FaCheckCircle } from 'react-icons/fa';
-import Contact from '@/interfaces/Contact';
+import CreateContact from '@/interfaces/CreateContact';
+import { useCreateContactMutation } from '@/redux/services/contactsApi';
+import Swal from 'sweetalert2';
+import useVerifyTokenAndRedirect from '../hook/verifyToken';
 
-type FormContactProps = {
-  contactData: Contact;
-  handleSave: (data: Partial<Contact>) => void;
-};
 
-const FormContact: React.FC<FormContactProps> = ({ contactData, handleSave }) => {
-  const contactsSelected: any = useAppSelector((state) => state.contacts.selectedContact);
-  const [photo, setPhoto] = useState(contactsSelected.photo || '');
-  const [address, setAddress] = useState(contactsSelected.address || '');
-  const [addressSuggestions, setAddressSuggestions] = useState<string[]>([]);
+const AddContactForm = () => {
+
+  const [photo, setPhoto] = useState('');
+  const [address, setAddress] = useState('');
   const [addressValue, setAddressValue] = useState('');
+  const [errorAddress, setErrorAddress] = useState(false);
+  const [addressSuggestions, setAddressSuggestions] = useState<string[]>([]);
 
-  useEffect(() => {
-    if (contactData && contactData.name) {
-      dispatch(setSelectedContact(contactData));
-    }
-  }, [contactData]);
-
-  const dispatch = useAppDispatch();
+  useVerifyTokenAndRedirect();
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0] || null;
@@ -72,7 +65,7 @@ const FormContact: React.FC<FormContactProps> = ({ contactData, handleSave }) =>
     const suggestions = await getAddressSuggestions(value);
     setAddressSuggestions(suggestions);
   };
-
+  
   const renderSuggestion = (suggestion: string) => {
     const truncatedSuggestion = suggestion.length > 50 ? `${suggestion.slice(0, 50)}...` : suggestion;
     return (
@@ -81,6 +74,7 @@ const FormContact: React.FC<FormContactProps> = ({ contactData, handleSave }) =>
       </div>
     );
   };
+
 
   const autosuggestProps = {
     suggestions: addressSuggestions,
@@ -91,12 +85,44 @@ const FormContact: React.FC<FormContactProps> = ({ contactData, handleSave }) =>
   };
   const onChangeAddress = (event: React.FormEvent, { newValue }: Autosuggest.ChangeEvent) => {
     setAddress(newValue)
+    setErrorAddress(false)
     setAddressValue(newValue);
   };
 
   const onBlurAddress = (event: React.FormEvent) => {
     setAddressValue((event.target as HTMLInputElement).value);
   };
+
+  const [createContactMutation] = useCreateContactMutation();
+
+  const handleSubmitAdd = async (data: CreateContact) => {
+    try {
+      const response = await createContactMutation(data);
+      if (response.data) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "success",
+            title: "Contacto creado exitosamente"
+          });
+        window.location.href = '/';
+      } else {
+        console.error('Failed to create contact:', response.error);
+      }
+    } catch (error) {
+      console.error('Error creating contact:', error);
+    }
+  };
+
 
 
   
@@ -105,23 +131,34 @@ const FormContact: React.FC<FormContactProps> = ({ contactData, handleSave }) =>
   return (
     <Formik
       initialValues={{
-        name: contactsSelected.name || '',
-        profession: contactsSelected.profession || '',
-        address: contactsSelected.address || '',
-        phone: contactsSelected.phone || '',
-        email: contactsSelected.email || '',
-        photo: contactsSelected.photo || '', 
+        name:  '',
+        profession:  '',
+        address:  '',
+        phone: '',
+        email:  '',
+        photo:  '', 
       }}
       validationSchema={Yup.object({
         name: Yup.string().required('Required name'),
         profession: Yup.string().required('Required profession'),
-        address: Yup.string().required('Required address'),
         phone: Yup.string().required('Required phone'),
         email: Yup.string().email('Invalid email address').required('Required'),
         photo: Yup.string(), 
       })}
       onSubmit={(values, { setSubmitting }) => {
-        handleSave({ ...values, photo, address });
+        const newContact: CreateContact = {
+            name: values.name,
+            email: values.email,
+            address: address,
+            phone: values.phone,
+            photo: values.photo || '',
+            profession: values.profession || '',
+        };
+        if (!address.trim()) {
+            setErrorAddress(true)
+            return;
+          }
+        handleSubmitAdd(newContact);
         setSubmitting(false);
       }}
     >
@@ -183,7 +220,10 @@ const FormContact: React.FC<FormContactProps> = ({ contactData, handleSave }) =>
               {...autosuggestProps}
             />
 
-              <ErrorMessage name="address" component="div" className="error-message" />
+              {errorAddress && 
+              <p className="error-message">
+                Required Address
+            </p>}
             </div>
             <div className="input-group">
               <label className="contact-name" htmlFor="phone">Phone</label>
@@ -208,12 +248,11 @@ const FormContact: React.FC<FormContactProps> = ({ contactData, handleSave }) =>
           </div>
         </div>
         <div className="button-group">
-          <button type="submit" className="save-button">Save</button>
-          <button type="button" className="cancel-button" onClick={() => dispatch(setEditContact(false))}>Cancel</button>
+          <button type="submit" className="add-button">Add contact</button>
         </div>
       </Form>
     </Formik>
   );
 };
 
-export default FormContact;
+export default AddContactForm;
