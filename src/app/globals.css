@@ -22,15 +22,6 @@ body{
   margin-top: 3rem;
 }
 
-.spinner {
-  border: 4px solid rgba(0, 0, 0, 0.1);
-  border-left-color: rgb(201, 131, 208);
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-}
-
 .search{
   width: 80vw;
   height: 45px;
@@ -42,15 +33,6 @@ body{
   margin-top: 2rem;
 }
 
-.searchbar{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.search-icon{
-  left: 4.2rem;
-}
-
 .centered {
   text-align: center;
   display: flex;
@@ -58,24 +40,6 @@ body{
   justify-content: center;
   align-items: center;
   gap: 1rem;
-}
-.centered-register {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.contact-data{
-  display: flex;
-  text-align: center;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 8rem;
 }
 
 .subtitle {
@@ -90,13 +54,11 @@ body{
 .button {
   background-color: #9378FF;
   color: white;
-  padding: 10px 20px;
   border: none;
   border-radius: 60px;
   font-family: 'Red Hat Display', sans-serif;
   font-size: 16px;
   font-weight: 700;
-  margin-top: 20px; 
   cursor: pointer;
   padding: 1rem 3rem;
 }
@@ -168,12 +130,6 @@ body{
   border-radius: 50%;
 }
 
-.loader {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
 
 .contact-name {
   font-family: 'Red Hat Display', sans-serif;
@@ -189,42 +145,6 @@ body{
   color: #99879D;
 }
 
-.header-profile{
-  width: 80vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 278px;
-  top: 2rem;
-  gap: 0px;
-  border-radius: 16px 0px 0px 0px;
-  border: 1px 0px 0px 0px;
-  opacity: 0px;
-  background: #EBEBEB;
-  position: relative;
-}
-
-.profile-image {
-  width: 186px;
-  height: 186px;
-  top: calc(100% - 186px / 2); 
-  left: 50%;
-  transform: translateX(-50%); 
-  gap: 0px;
-  border: 2px solid black; 
-  opacity: 1; 
-  position: absolute;
-  z-index: 1; 
-  border-radius: 50%;
-}
-
-.contact-details {
-  display: flex;
-  width: 400px;
-  justify-content: space-between;
-  margin-top: 20px;
-}
-
 .column {
   flex: 1;
   display: flex;
@@ -235,12 +155,6 @@ body{
   margin-bottom: 10px;
 }
 
-.edit-button {
-  position: absolute;
-  right: 3rem;
-  top: 11rem;
-  cursor: pointer;
-}
 .edit-button-download {
   position: absolute;
   right: 5rem;
@@ -296,19 +210,6 @@ body{
   cursor: pointer;
   margin-bottom: 2rem;
 }
-.add-button{
-  background-color: #9378FF;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 60px;
-  font-family: 'Red Hat Display', sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  padding: 1rem 3rem; 
-  margin-bottom: 2rem;
-}
 
 .cancel-button {
   background-color: #ccc;
@@ -320,37 +221,34 @@ body{
 
 .file-div {
   display: flex;
-  align-items: center; /* Centra verticalmente */
+  align-items: center; 
   gap: 1rem; 
-  padding: 0 1rem;/* Espacio entre los elementos */
+  padding: 0 1rem;
 }
 
 .upload-label {
-  flex: 1; /* El texto ocupa el espacio restante */
+  flex: 1; 
 }
 
 .edit-button-download-file {
   cursor: pointer;
-  margin-right: 1rem; /* Cambia el cursor al pasar sobre el ícono */
+  margin-right: 1rem; 
 }
 
+.odd {
+  background-color: #FFFFFF;
+}
 
-.contact-data-mobile{
-  display:none;
+.even {
+  background-color: #FFFFFF;
 }
 
 @media (max-width: 768px) {
   .contact-card {
-    flex: 1 1 calc(100% - 1rem); /* Hace que cada tarjeta ocupe el 100% del ancho */
+    flex: 1 1 calc(100% - 1rem); 
   }
 
-  .contact-data{
-    display: none;
-  }
   .edit-button-download{
-    display: none;
-  }
-  .edit-button{
     display: none;
   }
 
@@ -379,16 +277,7 @@ body{
     margin-top: 1rem;
   }
 
-  .searchbar{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-  }
-  .search-icon{
-    bottom: 1rem;
-    left: .4rem;
-  }
+
   .contacts {
     grid-template-columns: 1fr; 
     gap: 0;
@@ -411,10 +300,9 @@ body{
     margin: 0;
   }
   .contact-card.odd {
-    background-color: #FAF9FE;
+    background-color: #FAF9FE !important;
   }
-  
-  /* Estilos para las tarjetas impares */
+
   .contact-card.even {
     background-color: #FFFFFF;
   }
@@ -448,47 +336,6 @@ body{
     gap: 0rem;
     margin-bottom: 16px;
   }
-  .header-profile{
-    width: 95vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 173px;
-    top: 0rem;
-    gap: 0px;
-    border-radius: 16px 0px 0px 0px;
-    border: 1px 0px 0px 0px;
-    opacity: 0px;
-    background: #FBEEFF;
-    position: relative;
-  }
-  .profile-image {
-    width: 82px;
-    height: 82px;
-    top: 1rem; 
-    left: 50%;
-    transform: translateX(-50%); 
-    gap: 0px;
-    border: 2px solid transparent; 
-    opacity: 1; 
-    position: absolute;
-    z-index: 1; 
-    border-radius: 50%;
-  }
-  .contact-data-mobile{
-    display: flex;
-    text-align: center;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 6rem;
-  }
-  .contact-details {
-    display: flex;
-    width: 80vw;
-    flex-direction: column; 
-    margin-top: 20px;
-  }
   
   .column {
     display: block;
@@ -499,13 +346,13 @@ body{
     text-align: start; 
   }
 
-  .edit-button-mobile {
-    display: flex;
-    text-align: center;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 1rem;
-  }
   
+  .odd {
+    background-color: #FAF9FE;
+  }
+
+  .even {
+    background-color: #FFFFFF;
+  }
+
 }

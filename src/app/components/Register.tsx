@@ -2,6 +2,8 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import RegisterData from '@/interfaces/RegisterData';
+import Button from './Button';
+import styled from 'styled-components';
 
 const Register = ({ handleSubmitRegister }: { handleSubmitRegister: (data: RegisterData) => void }) => {
 
@@ -43,7 +45,7 @@ const Register = ({ handleSubmitRegister }: { handleSubmitRegister: (data: Regis
   
   
   return (
-    <div className='centered-register'>
+    <CenteredRegister>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -77,14 +79,25 @@ const Register = ({ handleSubmitRegister }: { handleSubmitRegister: (data: Regis
               </div>
             </div>
             </div>
-            <button type="submit" disabled={isSubmitting} className="button">
-              {isSubmitting ? 'Registering...' : 'REGISTER'}
-            </button>
+            <Button type="submit" >
+            {isSubmitting ? 'Registering...' : 'REGISTER'}
+          </Button>
           </Form>
         )}
       </Formik>
-    </div>
+    </CenteredRegister>
   );
 };
+
+const CenteredRegister = styled.div`
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+`;
+
 
 export default Register;

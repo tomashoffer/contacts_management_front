@@ -1,4 +1,5 @@
-import React, { useState, FormEvent } from 'react';
+import React, { FormEvent } from 'react';
+import Button from './Button';
 
 const LogIn = ({ handleSubmit }: { handleSubmit: (event: FormEvent<HTMLFormElement>) => void }) => {
   return (
@@ -15,9 +16,9 @@ const LogIn = ({ handleSubmit }: { handleSubmit: (event: FormEvent<HTMLFormEleme
         placeholder="Password"
         name="password"
       />
-    <button type="submit" className="button">
-     LOGIN
-    </button>
+      <Button type="submit" className="button">
+          LOGIN
+      </Button>
     </form>
   );
 };

@@ -9,10 +9,9 @@ import CreateContact from '@/interfaces/CreateContact';
 import { useCreateContactMutation } from '@/redux/services/contactsApi';
 import Swal from 'sweetalert2';
 import useVerifyTokenAndRedirect from '../hook/verifyToken';
-
+import Button from './Button'; // Importar el componente Button
 
 const AddContactForm = () => {
-
   const [photo, setPhoto] = useState('');
   const [address, setAddress] = useState('');
   const [addressValue, setAddressValue] = useState('');
@@ -60,7 +59,6 @@ const AddContactForm = () => {
     }
   };
 
-
   const onSuggestionsFetchRequested = async ({ value }: { value: string }) => {
     const suggestions = await getAddressSuggestions(value);
     setAddressSuggestions(suggestions);
@@ -75,7 +73,6 @@ const AddContactForm = () => {
     );
   };
 
-
   const autosuggestProps = {
     suggestions: addressSuggestions,
     onSuggestionsFetchRequested,
@@ -83,9 +80,10 @@ const AddContactForm = () => {
     getSuggestionValue: (suggestion: string) => suggestion,
     renderSuggestion, 
   };
+
   const onChangeAddress = (event: React.FormEvent, { newValue }: Autosuggest.ChangeEvent) => {
-    setAddress(newValue)
-    setErrorAddress(false)
+    setAddress(newValue);
+    setErrorAddress(false);
     setAddressValue(newValue);
   };
 
@@ -100,21 +98,20 @@ const AddContactForm = () => {
       const response = await createContactMutation(data);
       if (response.data) {
         const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.onmouseenter = Swal.stopTimer;
-              toast.onmouseleave = Swal.resumeTimer;
-            }
-          });
-          Toast.fire({
-            icon: "success",
-            title: "Contacto creado exitosamente"
-          });
-        window.location.href = '/';
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Contacto creado exitosamente"
+        });
       } else {
         console.error('Failed to create contact:', response.error);
       }
@@ -123,46 +120,40 @@ const AddContactForm = () => {
     }
   };
 
-
-
-  
-
-
   return (
     <Formik
       initialValues={{
-        name:  '',
-        profession:  '',
-        address:  '',
+        name: '',
+        profession: '',
+        address: '',
         phone: '',
-        email:  '',
-        photo:  '', 
+        email: '',
+        photo: '', 
       }}
       validationSchema={Yup.object({
         name: Yup.string().required('Required name'),
         profession: Yup.string().required('Required profession'),
         phone: Yup.string().required('Required phone'),
         email: Yup.string().email('Invalid email address').required('Required'),
-        photo: Yup.string(), 
       })}
       onSubmit={(values, { setSubmitting }) => {
         const newContact: CreateContact = {
-            name: values.name,
-            email: values.email,
-            address: address,
-            phone: values.phone,
-            photo: values.photo || '',
-            profession: values.profession || '',
+          name: values.name,
+          email: values.email,
+          address: address,
+          phone: values.phone,
+          photo: photo || '',
+          profession: values.profession || '',
         };
         if (!address.trim()) {
-            setErrorAddress(true)
-            return;
-          }
+          setErrorAddress(true);
+          return;
+        }
         handleSubmitAdd(newContact);
         setSubmitting(false);
       }}
     >
-      <Form className="centered">
+      <Form className="centered" style={{marginBottom: '1rem'}}>
         <div className="edit-contact-form">
           <div className="form-column">
             <div className="input-group">
@@ -209,21 +200,18 @@ const AddContactForm = () => {
             <div className="input-group">
               <label className="contact-name" htmlFor="address">Address</label>
               <Autosuggest
-              inputProps={{
-                id: 'address',
-                name: 'address',
-                value: address,
-                onChange: onChangeAddress,
-                onBlur: onBlurAddress,
-                className: 'form-input',
-              }}
-              {...autosuggestProps}
-            />
-
+                inputProps={{
+                  id: 'address',
+                  name: 'address',
+                  value: address,
+                  onChange: onChangeAddress,
+                  onBlur: onBlurAddress,
+                  className: 'form-input',
+                }}
+                {...autosuggestProps}
+              />
               {errorAddress && 
-              <p className="error-message">
-                Required Address
-            </p>}
+                <p className="error-message">Required Address</p>}
             </div>
             <div className="input-group">
               <label className="contact-name" htmlFor="phone">Phone</label>
@@ -248,7 +236,9 @@ const AddContactForm = () => {
           </div>
         </div>
         <div className="button-group">
-          <button type="submit" className="add-button">Add contact</button>
+          <Button type="submit" >
+            ADD CONTACT
+          </Button>
         </div>
       </Form>
     </Formik>

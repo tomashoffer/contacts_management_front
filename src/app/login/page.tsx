@@ -1,6 +1,6 @@
 'use client'
 import { FormEvent } from 'react';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import Register from '@/app/components/Register';
 import LogIn from '../components/Login';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
@@ -15,7 +15,8 @@ const LoginPage = () => {
   const dispatch = useAppDispatch();
   const [loginUserMutation] = useLoginUserMutation();
   const [registerUserMutation] = useRegisterUserMutation();
-  
+
+
   async function handleSubmitLogIn(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
   
